@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Multimedia</h1>
+    <h3>Audio Files</h3>
+    <audio controls>
+        <source src="filename">
+    </audio>
+    <h3>Video files</h3>
+    <video height="200px" width="300px" controls>
+        <source src="videoname">
+    </video>
+    <video height="200px" width="300px" autoplay muted controls>
+        <source src="videoname">
+    </video>
+
+    <video height="200px" width="300px" controls>
+        <source src="videoname">
+        <track
+        src="subtitle1.txt"
+        kind="subtitles"
+        srclang="en"
+        label="English"/>
+        <track
+        src="subtitle2.txt"
+        kind="subtitles"
+        srclang="in"
+        label="Hindi"/>
+    </video>
+    <br>
+ <h3>SVG Graphic</h3>
+  <svg width="900" height="900" style="border: 1px solid #ccc;">
+    <circle cx="250" cy="400" r="100" stroke="red" stroke-width="5" fill="pink" />
+    <text x="250" y="410" text-anchor="middle" font-size="20" fill="black">
+      Cute Circle 💗
+    </text>
+  </svg>
+</body>
+</html>
