@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* in inline block or other attribi=ute can apply  */
+        /* .li{
+            display: inline;
+            width: 10px;
+        } */
+        .li{
+            display: inline-block;
+            margin: 10px;
+        }
+        .flex{
+            display: flex;
+            justify-content: space-around;
+            background-color: yellow;
+            align-items: center;
+            flex-wrap: wrap;
+            flex-direction: column;
+            height: 300px;
+        }
+        .grid{
+            display: grid;
+            grid-template-columns: auto auto auto;
+            column-gap: 20px;
+            row-gap: 10 px;
+            background-color: beige;
+            justify-content: space-around;
+            align-items: center;
+            height: 300px;
+
+        }
+    </style>
+</head>
+<body>
+    <h1>Css Display property</h1>
+    <br>
+    <h3>Inline Vs inline- block</h3>
+    <br>
+        <li>Home</li>
+        <li>Services</li>
+        <li>Projects</li>
+        <li>About</li>
+    <hr>
+    <h2>Flex Box</h2>
+    <div class="flex">
+        <h3>Flex</h3>
+        <div>Child 1 Child</div>
+        <div>Child 2 Child</div>
+        <div>Child 3 Child</div>
+        <div>Child 4 Child</div>
+        <div>Child 5 Child</div>
+        <div>Child 6 Child</div>
+        <div>Child 7 Child</div>
+
+    </div>
+    <hr>
+    <h3>Grid</h3>
+      <div class="grid">
+        
+        <div>Child 1 </div>
+        <div>Child 2 </div>
+        <div>Child 3 </div>
+        <div>Child 4 </div>
+        <div>Child 5 </div>
+        <div>Child 6 </div>
+        
+
+    </div>
+    <h2>Resposive Design</h2>
+    
+</body>
+</html>
