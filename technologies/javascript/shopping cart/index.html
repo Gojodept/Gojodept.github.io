@@ -1,9 +1,11 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+
   </head>
   <body>
     <h1>Shopping cart</h1>
@@ -16,11 +18,31 @@
       <div id="root"></div>
       <div id="cart"></div>
       <div id="total"></div>
-     
     </div>
 
     <hr />
     <h4>Shopping cart copyright 2025.All rights reserved</h4>
+    <script src="app.js"></script>
+  </body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body onload="showProducts()">
+    <h1>Shopping Cart</h1>
+    <ul>
+      <li onclick="showProducts()">Home</li>
+      <li onclick="showCart()">Cart</li>
+    </ul>
+    <hr />
+    <div id="root" class="row"></div>
+    <hr />
+    <h4>Shopping Cart. Copyright 2025. All rights reserved.</h4>
     <script src="app.js"></script>
   </body>
 </html>
