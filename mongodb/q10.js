@@ -28,13 +28,13 @@
 // db.customers.insertOne({name:"John"})
 
 // Check secondary servers. Check both the servers if data is replicated
-// mongosh --port 270xx
+// mongosh --port 27019
 // Secondary will start, can read but cannot write
 // db.getMongo().setReadPref("secondary")  //or rs.secondaryOk()
 // use mytestdb
 // db.customers.find() – will work now
 
-// mongosh --port 270xx
+// mongosh --port 27020
 // Secondary will start, can read but cannot write
 // db.getMongo().setReadPref("secondary")  //or rs.secondaryOk()
 // use mytestdb
@@ -43,7 +43,7 @@
 
 
 // Shutdown primary server and the primary will be automatically changed to one of the other two servers
-// Go to primary 270xx
+// Go to primary 27018
 // Use admin
 // db.shutdownServer() 
 // ----------------------
