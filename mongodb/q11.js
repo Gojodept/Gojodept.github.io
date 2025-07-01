@@ -32,4 +32,5 @@
 // sh.enableSharding("mydatabase")
 // sh.shardCollection("mydatabase.customers", { _id: 1 })
 // sh.status()
+// run q12.js then below step
 // sh.getShardedDataDistribution() //run this after executing below nodejs scripts
