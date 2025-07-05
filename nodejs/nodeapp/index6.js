@@ -1,47 +1,41 @@
-import express from 'express';
-
+import express from "express";
 const app = express();
-app.listen(8080,()=>{
-    console.log("Server Started ");
-});
-//I
-app.use(express.json())
-let Students=[]
-app.post("/",(req,res)=>{
-    const {name,password,email}=req.body;
-    const obj={
-        name,
-        password,
-        email,
-    }
-    Students.push(req.body);
-    res.json({message:"Student  regustered"});
-})
-//Middleware 
-const auth = (req, res, next) => {
-  const { name, password } = req.params;
-
-  const user = Students.find(
-    (student) => student.name === name && student.password === password
-  );
-
-  if (user) {
+app.listen(8080);
+app.use(express.json());
+let users = [];
+const authenticate = (req, res, next) => {
+  if (req.headers.authorization) {
+    req.role = "user";
     next();
   } else {
-    res.send("Access not given");
+    return res.json({ message: "Invalid Token" });
   }
 };
-app.get("/",auth,(req,res)=>(
-    res.json(Students)
-))
+const authorize = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.role)) {
+      return res.send("Access Denied");
+    } else {
+      next();
+    }
+  };
+};
 
-//Login Api
-app.get("/login/:name/:password",auth,(req,res)=>{
-     res.send("Login successful!");
-})
-//Delete Api  
-app.delete("/:id",(req,res)=>{
-    const id =req.params.id;
-    products=products.filter((product)=>product.id !=id)
-    res.json("Student Removed")
-})
+app.get("/", authenticate, authorize("admin"), (req, res) => {
+  res.json(users);
+});
+app.post("/register", (req, res) => {
+  users.push(req.body);
+  res.json({ message: "User Registered" });
+});
+app.post("/login", (req, res) => {
+  const { email, pass } = req.body;
+  const found = users.find(
+    (user) => user.email === email && user.pass === pass
+  );
+  if (found) {
+    res.json({ message: "Welcome" });
+  } else {
+    res.json({ message: "Access Denied" });
+  }
+});
