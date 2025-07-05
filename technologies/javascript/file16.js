@@ -32,14 +32,16 @@
 //   })
 //   .catch((err) => console.log(err));
 
-
-
 //METHOD 2
-const fetchData = async() => {
-  const res = await fetch("https://jsonplaceholder.typicode.com/users");//fetch resolves a promise thats why we do asysnc to wait for
+
+const fetchData = async () => {
+  //use await then add async to parent function
+
+  const res = await fetch("https://jsonplaceholder.typicode.com/users"); //fetch function return promise that's why use await before this as data is dependent on res i.e fetch
   const data = await res.json();
-  data.map((value)=>{
-    console.log(value.name);
-  })
+  data.map((val) => {
+    console.log(val.name);
+  });
 };
+
 fetchData();

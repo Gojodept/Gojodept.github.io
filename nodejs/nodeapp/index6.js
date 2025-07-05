@@ -3,9 +3,10 @@ const app = express();
 app.listen(8080);
 app.use(express.json());
 let users = [];
+//middle ware 
 const authenticate = (req, res, next) => {
   if (req.headers.authorization) {
-    req.role = "user";
+    req.role = "admin";
     next();
   } else {
     return res.json({ message: "Invalid Token" });

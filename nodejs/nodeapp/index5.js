@@ -38,7 +38,7 @@ app.listen(8080,()=>{
     console.log("Server Started ");
 });
 //I
-app.use(express.json())
+app.use(express.json())// Middleware to parse JSON request bodies
 let Students=[]
 app.post("/",(req,res)=>{
     const {name,password,email}=req.body;

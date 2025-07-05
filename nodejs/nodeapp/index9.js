@@ -8,7 +8,7 @@ app.listen(8080, () => {
 });
 let users = [];
 app.use(express.json());
-
+//Middleware 
 const authenticate = (req, res, next) => {
   try {
     let token = req.headers.authorization;
@@ -30,7 +30,7 @@ const authorize = (role) => {
     }
   };
 };
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const found = users.find((user) => user.email === email);
