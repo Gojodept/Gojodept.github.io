@@ -1,14 +1,16 @@
 import express from "express";
-import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+const SECRET = "something";
 const app = express();
-const SECRET = "sometext";
-app.listen(8080, () => {
-  console.log("Server started");
-});
-let users = [];
 app.use(express.json());
-//Middleware 
+mongoose.connect("mongodb://localhost:27017/lpu").then(() => {
+  app.listen(8080, () => {
+    console.log("Server started");
+  });
+});
+
 const authenticate = (req, res, next) => {
   try {
     let token = req.headers.authorization;
@@ -30,32 +32,63 @@ const authorize = (role) => {
     }
   };
 };
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-  const found = users.find((user) => user.email === email);
-  const matchPass = await bcrypt.compare(password, found.password);
-  if (matchPass) {
-    const token = jwt.sign(found, SECRET, { expiresIn: "1h" });
-    res.status(200).json({ user: found, token });
-  } else {
-    res.status(400).json({ message: "Access Denied" });
+
+const userSchema = mongoose.Schema(
+  {
+    username: { type: String },
+    email: { type: String, unique: true },
+    password: { type: String },
+    role: { type: String, default: "user" },
+  },
+  { timestamps: true }
+);
+const userModel = mongoose.model("User", userSchema);
+app.post("/register", async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+    const hashedpwd = await bcrypt.hash(password, 10);
+    const user = {
+      username,
+      email,
+      password: hashedpwd,
+    };
+    const result = await userModel.create(user);
+    res.status(201).json(result);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Something went wrong" });
   }
 });
 
-app.get("/users", authenticate, authorize("admin"), (req, res) => {
-  res.json(users);
+app.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const existingUser = await userModel.findOne({ email });
+    if (existingUser) {
+      const isMatch = await bcrypt.compare(password, existingUser.password);
+      if (isMatch) {
+        const userObj = {
+          username: existingUser.username,
+          email: existingUser.email,
+          role: existingUser.role,
+        };
+        const token = jwt.sign(userObj, SECRET, { expiresIn: "1h" });
+        res.status(200).json({ user: userObj, token });
+      } else {
+        res.status(400).json({ message: "Invalid Password" });
+      }
+    } else {
+      res.status(400).json({ message: "User not found" });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: "Something went wrong" });
+  }
 });
 
-app.post("/register", async (req, res) => {
-  const { name, email, password, role } = req.body;
-  const hashedpwd = await bcrypt.hash(password, 10);
-  const user = {
-    name,
-    email,
-    password: hashedpwd,
-    role,
-  };
-  users.push(user);
-  res.json(user);
+app.get("/showusers", authenticate, authorize("admin"), async (req, res) => {
+  try {
+    const result = await userModel.find();
+    res.status(200).json(result);
+  } catch (err) {}
 });
